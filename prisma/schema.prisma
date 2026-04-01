@@ -9,3 +9,17 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum Status {
+  PENDING
+  DONE
+}
+
+model Todo {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?
+  due_date    DateTime?
+  status      Status    @default(PENDING)
+  created_at  DateTime  @default(now())
+}
