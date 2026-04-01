@@ -20,14 +20,15 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/autoload": "^6.0.0",
+    "@fastify/redis": "^7.2.0",
     "@fastify/sensible": "^6.0.0",
-    "@fastify/sse": "^0.4.0",
     "@fastify/type-provider-typebox": "^6.1.0",
     "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.6.0",
     "dotenv": "^17.3.1",
     "fastify": "^5.0.0",
     "fastify-plugin": "^5.0.0",
+    "ioredis": "^5.10.1",
     "typebox": "^1.1.13"
   },
   "ppnpm": {

@@ -180,6 +180,49 @@ const todos: FastifyPluginAsyncTypebox = async (
       return reply.send(todos.map(serialiseTodo));
     },
   );
+
+  fastify.post(
+    "/:id/notify",
+    {
+      schema: {
+        params: Type.Object({
+          id: Type.Number(),
+        }),
+        response: {
+          200: Type.Object({
+            message: Type.String(),
+            listeners: Type.Number(),
+          }),
+        },
+      },
+    },
+    async (request, reply) => {
+      const { id } = request.params;
+
+      const todo = await fastify.prisma.todo.findUnique({ where: { id } });
+      if (!todo) {
+        return reply.notFound("Todo not found");
+      }
+
+      const payload = JSON.stringify({
+        id: todo.id,
+        title: todo.title,
+        status: DB_TO_API[todo.status],
+        due_date: todo.due_date
+          ? todo.due_date.toISOString().split("T")[0]
+          : null,
+      });
+
+      await fastify.redis.pub.publish("todo_alerts", payload);
+
+      const listeners = parseInt(
+        (await fastify.redis.pub.get("sse:listeners")) ?? "0",
+        10,
+      );
+
+      return reply.send({ message: "Alerte envoyée", listeners });
+    },
+  );
 };
 
 export default todos;

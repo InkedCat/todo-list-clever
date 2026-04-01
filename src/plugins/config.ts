@@ -3,10 +3,11 @@ import fp from "fastify-plugin";
 
 export interface Config {
   POSTGRESQL_ADDON_URI: string;
+  REDIS_URL: string;
   PORT: number;
   HOST: string;
   NODE_ENV: "development" | "production";
-  APP_NAME: string
+  APP_NAME: string;
 }
 
 function getEnvOrThrow(key: string): string {
@@ -29,6 +30,7 @@ export default fp(
     const config: Config = {
       APP_NAME: process.env["APP_NAME"] ?? "todo-list-clever",
       POSTGRESQL_ADDON_URI: getEnvOrThrow("POSTGRESQL_ADDON_URI"),
+      REDIS_URL: process.env["REDIS_URL"] ?? "redis://localhost:6379",
       PORT: parseInt(process.env["PORT"] ?? "3000", 10),
       HOST: process.env["HOST"] ?? "0.0.0.0",
       NODE_ENV:
