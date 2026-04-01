@@ -6,6 +6,7 @@ export interface Config {
   PORT: number;
   HOST: string;
   NODE_ENV: "development" | "production";
+  APP_NAME: string
 }
 
 function getEnvOrThrow(key: string): string {
@@ -26,6 +27,7 @@ function getEnvOrThrow(key: string): string {
 export default fp(
   async (fastify) => {
     const config: Config = {
+      APP_NAME: process.env["APP_NAME"] ?? "todo-list-clever",
       DATABASE_URL: getEnvOrThrow("DATABASE_URL"),
       PORT: parseInt(process.env["PORT"] ?? "3000", 10),
       HOST: process.env["HOST"] ?? "0.0.0.0",
