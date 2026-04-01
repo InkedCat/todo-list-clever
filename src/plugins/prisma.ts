@@ -1,27 +1,32 @@
-import fp from 'fastify-plugin'
-import { PrismaClient } from '../generated/prisma/client.js'
-import { PrismaPg } from '@prisma/adapter-pg'
+import fp from "fastify-plugin";
+import { PrismaClient } from "../generated/prisma/client.js";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 /**
  * This plugin adds a Prisma client instance to the Fastify server.
  *
  * @see https://www.prisma.io/docs
  */
-export default fp(async (fastify) => {
-  const adapter = new PrismaPg({ connectionString: fastify.config.DATABASE_URL })
-  const prisma = new PrismaClient({ adapter })
+export default fp(
+  async (fastify) => {
+    const adapter = new PrismaPg({
+      connectionString: fastify.config.DATABASE_URL,
+    });
+    const prisma = new PrismaClient({ adapter });
 
-  await prisma.$connect()
+    await prisma.$connect();
 
-  fastify.decorate('prisma', prisma)
+    fastify.decorate("prisma", prisma);
 
-  fastify.addHook('onClose', async (instance) => {
-    await instance.prisma.$disconnect()
-  })
-}, { name: 'prisma', dependencies: ['config'] })
+    fastify.addHook("onClose", async (instance) => {
+      await instance.prisma.$disconnect();
+    });
+  },
+  { name: "prisma", dependencies: ["config"] },
+);
 
-declare module 'fastify' {
+declare module "fastify" {
   export interface FastifyInstance {
-    prisma: PrismaClient
+    prisma: PrismaClient;
   }
 }
