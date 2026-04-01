@@ -10,7 +10,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 export default fp(
   async (fastify) => {
     const adapter = new PrismaPg({
-      connectionString: fastify.config.DATABASE_URL,
+      connectionString: fastify.config.POSTGRESQL_ADDON_URI,
     });
     const prisma = new PrismaClient({ adapter });
 

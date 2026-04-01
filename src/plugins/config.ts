@@ -2,7 +2,7 @@ import "dotenv/config";
 import fp from "fastify-plugin";
 
 export interface Config {
-  DATABASE_URL: string;
+  POSTGRESQL_ADDON_URI: string;
   PORT: number;
   HOST: string;
   NODE_ENV: "development" | "production";
@@ -21,14 +21,14 @@ function getEnvOrThrow(key: string): string {
  * This plugin loads configuration from environment variables (with dotenv
  * support) and decorates the Fastify instance with a typed `config` object.
  *
- * Required env vars: DATABASE_URL
+ * Required env vars: POSTGRESQL_ADDON_URI
  * Optional env vars: PORT (default 3000), HOST (default 0.0.0.0), NODE_ENV (default development)
  */
 export default fp(
   async (fastify) => {
     const config: Config = {
       APP_NAME: process.env["APP_NAME"] ?? "todo-list-clever",
-      DATABASE_URL: getEnvOrThrow("DATABASE_URL"),
+      POSTGRESQL_ADDON_URI: getEnvOrThrow("POSTGRESQL_ADDON_URI"),
       PORT: parseInt(process.env["PORT"] ?? "3000", 10),
       HOST: process.env["HOST"] ?? "0.0.0.0",
       NODE_ENV:
