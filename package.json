@@ -1,14 +1,15 @@
 {
   "name": "todo-list-clever",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with Fastify-CLI.",
-  "main": "app.ts",
+  "description": "A todo list application built with Fastify.",
+  "type": "module",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "npm run build:ts && fastify start -l info dist/app.js",
+    "start": "npm run build:ts && node dist/server.js",
     "build:ts": "tsc",
     "watch:ts": "tsc -w",
     "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
-    "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js"
+    "dev:start": "node --watch-path=dist dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,6 @@
     "@prisma/client": "^7.6.0",
     "dotenv": "^17.3.1",
     "fastify": "^5.0.0",
-    "fastify-cli": "^8.0.0",
     "fastify-plugin": "^5.0.0",
     "typebox": "^1.1.13"
   },
