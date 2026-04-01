@@ -8,7 +8,7 @@ import { PrismaPg } from '@prisma/adapter-pg'
  * @see https://www.prisma.io/docs
  */
 export default fp(async (fastify) => {
-  const adapter = new PrismaPg({ connectionString: process.env['DATABASE_URL'] })
+  const adapter = new PrismaPg({ connectionString: fastify.config.DATABASE_URL })
   const prisma = new PrismaClient({ adapter })
 
   await prisma.$connect()
@@ -18,7 +18,7 @@ export default fp(async (fastify) => {
   fastify.addHook('onClose', async (instance) => {
     await instance.prisma.$disconnect()
   })
-})
+}, { name: 'prisma', dependencies: ['config'] })
 
 declare module 'fastify' {
   export interface FastifyInstance {
