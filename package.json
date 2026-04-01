@@ -5,10 +5,10 @@
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
-    "start": "npm run build:ts && node dist/server.js",
+    "start": "pnpm run build:ts && node dist/server.js",
     "build:ts": "tsc",
     "watch:ts": "tsc -w",
-    "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
+    "dev": "pnpm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"pnpm:watch:ts\" \"pnpm:dev:start\"",
     "dev:start": "node --watch-path=dist dist/server.js",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
@@ -21,6 +21,7 @@
   "dependencies": {
     "@fastify/autoload": "^6.0.0",
     "@fastify/sensible": "^6.0.0",
+    "@fastify/sse": "^0.4.0",
     "@fastify/type-provider-typebox": "^6.1.0",
     "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.6.0",
@@ -29,7 +30,7 @@
     "fastify-plugin": "^5.0.0",
     "typebox": "^1.1.13"
   },
-  "pnpm": {
+  "ppnpm": {
     "onlyBuiltDependencies": [
       "@prisma/engines",
       "prisma"
