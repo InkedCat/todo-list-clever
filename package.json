@@ -5,7 +5,8 @@
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
-    "start": "pnpm run build:ts && node dist/server.js",
+    "start": "pnpm run build && node dist/server.js",
+    "build": "prisma generate && tsc",
     "build:ts": "tsc",
     "watch:ts": "tsc -w",
     "dev": "pnpm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"pnpm:watch:ts\" \"pnpm:dev:start\"",
@@ -29,9 +30,11 @@
     "fastify": "^5.0.0",
     "fastify-plugin": "^5.0.0",
     "ioredis": "^5.10.1",
-    "typebox": "^1.1.13"
+    "prisma": "^7.6.0",
+    "typebox": "^1.1.13",
+    "typescript": "~5.9.2"
   },
-  "ppnpm": {
+  "pnpm": {
     "onlyBuiltDependencies": [
       "@prisma/engines",
       "prisma"
@@ -48,9 +51,7 @@
     "fastify-tsconfig": "^3.0.0",
     "jiti": "^2.6.1",
     "prettier": "^3.8.1",
-    "prisma": "^7.6.0",
     "ts-node": "^10.4.0",
-    "typescript": "~5.9.2",
     "typescript-eslint": "^8.58.0"
   }
 }
